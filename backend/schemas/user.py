@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from pydantic import EmailStr
 from pydantic import Field
 
 from pydantic import BaseModel, constr, field_validator
@@ -21,10 +20,10 @@ class User(BaseModel):
         return value
 
 
-class ShowUser(BaseModel):
+class DisplayedUser(BaseModel):
     id: int
-    email: EmailStr
-    is_active: bool
+    username: str
+    is_collab_user: bool
 
     class Config:  # tells pydantic to convert even non dict obj to json
         orm_mode = True
