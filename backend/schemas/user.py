@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from pydantic import EmailStr
 from pydantic import Field
 
-
 from pydantic import BaseModel, constr, field_validator
 
 
@@ -20,7 +19,6 @@ class User(BaseModel):
         if not any(not char.isalnum() for char in value):
             raise ValueError("Password must contain at least one special character")
         return value
-
 
 
 class ShowUser(BaseModel):
