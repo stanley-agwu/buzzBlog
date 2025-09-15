@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from schemas.blog import CreateBlog, DisplayedBlog
 from db.session import get_db
-from db.controllers.blog import create_new_blog, get_blog_by_id
+from db.controllers.blog import create_new_blog, get_blog_by_id, get_all_blogs
 
 
 router = APIRouter()
@@ -13,9 +13,14 @@ def create_blog(blog: CreateBlog, db: Session = Depends(get_db)):
     blog = create_new_blog(blog=blog, db=db, author_id=1)
     return blog
 
-@router.get('/{id}', response_model=DisplayedBlog)
+@router.get("/{id}", response_model=DisplayedBlog)
 def get_blog(id: int, db: Session = Depends(get_db)):
     blog = get_blog_by_id(id=id, db=db)
     if not blog:
         return HTTPException(detail=f"Blog with id: {id}, does not exist", status_code=status.HTTP_404)
     return blog
+
+@router.get("", response_model=list[DisplayedBlog])
+def get_blogs(db: Session = Depends(get_db)):
+    blogs = get_all_blogs(db=db)
+    return blogs

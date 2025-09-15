@@ -18,3 +18,7 @@ def create_new_blog(blog: CreateBlog, db:Session, author_id: int = 1):
 def get_blog_by_id(id: int, db: Session):
     blog = db.query(Blog).filter(Blog.id == id).first()
     return blog
+
+def get_all_blogs(db: Session):
+    blogs = db.query(Blog).filter(Blog.is_active == True).all()
+    return blogs
