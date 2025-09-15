@@ -26,4 +26,4 @@ class DisplayedUser(BaseModel):
     is_collab_user: bool
 
     class Config:  # tells pydantic to convert even non dict obj to json
-        orm_mode = True
+        from_attributes = True
