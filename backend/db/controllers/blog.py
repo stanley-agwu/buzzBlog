@@ -23,7 +23,7 @@ def get_all_blogs(db: Session):
     blogs = db.query(Blog).filter(Blog.is_active == True).all()
     return blogs
 
-def update_blog_by_id(id: int, blog: UpdateBlog, db: Session):
+def update_blog_by_id(id: int, blog: UpdateBlog, db: Session, author_id: int):
     blog_in_db = db.query(Blog).filter(Blog.id == id).first()
     if not blog_in_db:
         return None
@@ -33,3 +33,11 @@ def update_blog_by_id(id: int, blog: UpdateBlog, db: Session):
     db.commit()
     db.refresh(blog_in_db)
     return blog_in_db
+
+def delete_blog_by_id(id: int, db: Session, author_id: int):
+    blog_in_db = db.query(Blog).filter(Blog.id == id).first()
+    if not blog_in_db:
+        return { "error": f"Could not find blog with id: {id}" }
+    blog_in_db.delete()
+    db.commit()
+    return { "msg": f"Success, deleted blog with id: {id}" }
