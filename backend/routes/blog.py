@@ -32,8 +32,8 @@ def update_blog(id: int, blog: UpdateBlog, db: Session = Depends(get_db)):
         raise HTTPException(f"Blog with id: {id}, does not exist", status_code=status.HTTP_404)
     return blog
 
-@router.delete("/{id}", response_model=DisplayedBlog)
-def update_blog(id: int, db: Session = Depends(get_db)):
+@router.delete("/{id}")
+def delete_blog(id: int, db: Session = Depends(get_db)):
     message = delete_blog_by_id(id=id, db=db, author_id=1)
     if message.get("error"):
         raise HTTPException(detail=message.get("error"), status_code=status.HTTP_400_BAD_REQUEST)
