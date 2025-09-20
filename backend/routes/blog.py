@@ -26,7 +26,7 @@ def get_blogs(db: Session = Depends(get_db)):
     return blogs
 
 @router.put("/", response_model=DisplayedBlog)
-def update_blog(id: int, blog: UpdateBlog, db: Session):
+def update_blog(id: int, blog: UpdateBlog, db: Session = Depends(get_db)):
     blog = update_blog_by_id(id=id, blog=blog, db=db)
     if not blog:
         raise HTTPException(f"Blog with id: {id}, does not exist", status_code=status.HTTP_404)

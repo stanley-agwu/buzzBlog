@@ -26,7 +26,7 @@ def get_all_blogs(db: Session):
 def update_blog_by_id(id: int, blog: UpdateBlog, db: Session):
     blog_in_db = db.query(Blog).filter(Blog.id == id).first()
     if not blog_in_db:
-        return
+        return None
     blog_in_db.title = blog.title if blog.title else blog_in_db.title
     blog_in_db.content = blog.content if blog.content else blog_in_db.content
     db.add(blog_in_db)
